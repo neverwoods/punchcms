@@ -1,3 +1,6 @@
+[![License](https://poser.pugx.org/neverwoods/validformbuilder/license.svg)](https://packagist.org/packages/neverwoods/validformbuilder)
+[![A project by Neverwoods](http://img.shields.io/badge/project_by-Neverwoods-blue.svg)](http://neverwoods.com)
+
 What is PunchCMS?
 =================
 
