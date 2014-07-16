@@ -47,7 +47,13 @@
 							<!-- END multiview-pagenavitem-top -->
 							<a class="button" href="{PAGENAV_NEXT_HREF}" rel="internal">{PAGENAV_NEXT}</a>
 						</p>
-						<h4>{PAGENAV_PAGE}</h4>
+						<!-- BEGIN multiview-sorting -->
+						<div class="itemsorting">
+							<span>Sorteer alfabetisch:</span>
+							<a class="button" href="#" onclick="{SORT-ACTION-ASC}" rel="internal">A-Z</a>
+							<a class="button" href="#" onclick="{SORT-ACTION-DESC}" rel="internal">Z-A</a>
+						</div>
+						<!-- END multiview-sorting -->
 					</div>
 					<!-- END multiview-pagenav-top -->
 					<!-- MULTIVIEW TEMPLATE -->

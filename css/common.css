@@ -708,11 +708,12 @@ div.center-wrap form {
 	float: right;
 	font-size: 10px;
 	color: #666;
-	margin-top: 3px;
 }
 
 #left-wrap div.itemheader a {
 	font-size: 10px;
+	margin-top: 3px;
+	display: inline-block;
 }
 
 #left-wrap div.itemheader span {
@@ -932,15 +933,16 @@ div.center-wrap form {
 	position: relative;
 	background: #CFD7EB;
 	border: 1px solid #AFB8CD;
-	padding: 6px 3px;
+	padding: 6px;
 	padding-left: 10px;
 	margin: 0;
+	overflow: auto;
 }
 
 #left-wrap div.page-nav h4 {
 	margin: 0;
 	padding: 0;
-	margin-top: -14px;
+	margin-top: 2px;
 	font-size: 12px;
 	font-weight: bold;
 	color: #555;
@@ -950,6 +952,7 @@ div.center-wrap form {
 
 #left-wrap div.page-nav p {
 	text-align: right;
+	float: right;
 }
 
 #left-wrap div.page-nav span {
@@ -967,9 +970,38 @@ div.center-wrap form {
 	background: #F7F8FC;
 	padding: 2px 5px 3px 5px;
 	border: 1px solid #AFBDDF;
+	display: inline-block;
 }
 
 #left-wrap div.page-nav p a:hover {
+	background: #5C5CAD;
+	color: #fff;
+}
+
+#left-wrap div.itemsorting {
+	float: left;
+}
+
+#left-wrap div.page-nav div.itemsorting span {
+	border: none;
+	background: none;
+	color: #333;
+	display: inline-block;
+	padding: 4px 5px 3px 1px;
+}
+
+#left-wrap div.page-nav div.itemsorting a:link, 
+#left-wrap div.page-nav div.itemsorting a:visited, 
+#left-wrap div.page-nav div.itemsorting a:active 
+{
+	text-decoration: none;
+	background: #F7F8FC;
+	padding: 2px 5px 3px 5px;
+	border: 1px solid #AFBDDF;
+	display: inline-block;
+}
+
+#left-wrap div.page-nav div.itemsorting a:hover {
 	background: #5C5CAD;
 	color: #fff;
 }

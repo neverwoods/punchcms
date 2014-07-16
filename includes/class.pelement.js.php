@@ -154,6 +154,12 @@ PElement.multiDo = function(objField, strAction) {
 	}
 }
 
+PElement.sort = function(intId, direction) {
+	PElement.executeCommand("?cid=<?php echo NAV_PCMS_ELEMENTS ?>&eid=" + intId + "&cmd=<?php echo CMD_SORT ?>");
+	
+	return false;
+}
+
 PElement.multiSelect = function() {
 	(this.checked) ? this.checked = false : this.checked = true;
 
