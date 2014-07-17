@@ -192,6 +192,7 @@ $_LANG['label']['selectElements'] = "Select elements";
 $_LANG['label']['import'] = "Import";
 $_LANG['label']['importFile'] = "Import file:";
 $_LANG['label']['exportOptions'] = "Import options";
+$_LANG['label']['sortAlphabetically'] = "Order alphabetically";
 
 //*** Settings label definitions.
 $_LANG['settingsLabel']['section_ftp'] = "FTP";
@@ -403,6 +404,7 @@ $_LANG['alert']['moveToFTP'] = "Upload to the webserver failed. Check the FTP se
 $_LANG['alert']['elementBeforeLanguage'] = "You need to create a default language before you can create an element!";
 $_LANG['alert']['newWindow'] = "This file will open in a new window.";
 $_LANG['alert']['refreshFailed'] = "Failed to refresh the element list.<br />This page will refresh in 2 seconds.";
+$_LANG['alert']['confirmSortAlphabetic'] = "Are you sure you want to order all elements alphabetically? This action is irreversible.";
 
 
 $_LANG['help']['docHeader'] = "Documentation";

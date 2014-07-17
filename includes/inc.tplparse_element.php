@@ -203,7 +203,8 @@ function parsePages($intElmntId, $strCommand) {
 				$objTpl->setVariable("BUTTON_LIST_SELECT", $objLang->get("selectAll", "button"));
 				$objTpl->setVariable("BUTTON_LIST_SELECT_HREF", "javascript:PElement.multiSelect()");
 				$objTpl->setVariable("LIST_ACTION_ONCHANGE", "PElement.multiDo(this, this[this.selectedIndex].value)");
-				
+
+				$objTpl->setVariable("LABEL-SORT", $objLang->get("sortAlphabetically", "label"));
 				$objTpl->setVariable("SORT-ACTION-ASC", "return PElement.sort($intElmntId, 'asc')");
 				$objTpl->setVariable("SORT-ACTION-DESC", "return PElement.sort($intElmntId, 'desc')");
 			}

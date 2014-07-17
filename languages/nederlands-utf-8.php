@@ -192,6 +192,7 @@ $_LANG['label']['selectElements'] = "Selecteer elementen";
 $_LANG['label']['import'] = "Importeren";
 $_LANG['label']['importFile'] = "Importeer bestand:";
 $_LANG['label']['importOptions'] = "Importeer opties";
+$_LANG['label']['sortAlphabetically'] = "Sorteer alfabetisch";
 
 //*** Settings label definitions.
 $_LANG['settingsLabel']['section_ftp'] = "FTP";
@@ -403,6 +404,7 @@ $_LANG['alert']['moveToFTP'] = "Uploaden naar de webserver is mislukt. Controlee
 $_LANG['alert']['elementBeforeLanguage'] = "U moet eerst een standaardtaal aanmaken voordat u een element kunt aanmaken!";
 $_LANG['alert']['newWindow'] = "Dit bestand zal in een nieuw venster openen.";
 $_LANG['alert']['refreshFailed'] = "Het verversen van de elementlijst is mislukt.<br />De pagina wordt ververst in 2 seconden.";
+$_LANG['alert']['confirmSortAlphabetic'] = "Alle elementen in de lijst worden alfabetisch gesorteerd. Weet u het zeker?";
 
 $_LANG['help']['docHeader'] = "Documentatie";
 $_LANG['help']['docBody'] = "<p><a href=\"images/PunchCMS_handleiding.pdf\" rel=\"external\">Download</a> de documentatie van het CMS voor een inleiding en algemene uitleg van de functionaliteit.</p><p>Voor het bekijken van de documentatie heeft u de <a href=\"http://www.adobe.com/products/acrobat/readstep2.html\" rel=\"external\">Adobe Reader</a> nodig.</p>";

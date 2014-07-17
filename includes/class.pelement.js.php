@@ -61,9 +61,9 @@ PElement.updateItemList = function (data) {
         $("#itemlist").html(itemlist.html());
 
         // Update tree view
-        if (typeof initUpdateSort == "function") {
-            initUpdateSort();
-        }
+		if (typeof objTree == "object") {
+			objTree.refreshItem(jQuery.query.get("eid"));
+		}
 
         // Update page navigation
         var firstPageNav = $(data).find(".page-nav").first().html();
@@ -155,7 +155,9 @@ PElement.multiDo = function(objField, strAction) {
 }
 
 PElement.sort = function(intId, direction) {
-	PElement.executeCommand("?cid=<?php echo NAV_PCMS_ELEMENTS ?>&eid=" + intId + "&cmd=<?php echo CMD_SORT ?>");
+	if (confirm("<?php echo $objLang->get("confirmSortAlphabetic", "alert") ?>")) {
+		PElement.executeCommand("?cid=<?php echo NAV_PCMS_ELEMENTS ?>&eid=" + intId + "&cmd=<?php echo CMD_SORT ?>&dir=" + direction);
+	}
 	
 	return false;
 }

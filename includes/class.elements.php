@@ -87,6 +87,7 @@ class Elements extends DBA__Collection {
 		$arrItemlist = request("itemlist");
 		$lastPosition = request("pos", 0);
 
+		//*** Either sort by incoming array or alphabetically.
 		if (is_array($arrItemlist) && count($arrItemlist) > 0) {
 			//*** Find last sort position.
 			if ($lastPosition > 0) {
@@ -99,6 +100,17 @@ class Elements extends DBA__Collection {
 			foreach ($arrItemlist as $value) {
 				$lastSort++;
 				$objElement = Element::selectByPK($value);
+				$objElement->setSort($lastSort);
+				$objElement->save(false);
+			}
+		} else {
+			//*** Let's sort alphabetically.
+			$strDirection = request("dir", "asc");
+			$objElements = Elements::getFromParent($intElementId);
+			$objElements->orderBy("name", $strDirection);
+
+			foreach ($objElements as $objElement) {
+				$lastSort++;
 				$objElement->setSort($lastSort);
 				$objElement->save(false);
 			}
