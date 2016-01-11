@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/javascript');
+
 session_save_path($_SERVER["DOCUMENT_ROOT"] . "/sessions");
 session_start();
 

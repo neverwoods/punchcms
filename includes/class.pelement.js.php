@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/javascript');
 
 session_save_path($_SERVER["DOCUMENT_ROOT"] . "/sessions");
 session_start();
@@ -158,7 +159,7 @@ PElement.sort = function(intId, direction) {
 	if (confirm("<?php echo $objLang->get("confirmSortAlphabetic", "alert") ?>")) {
 		PElement.executeCommand("?cid=<?php echo NAV_PCMS_ELEMENTS ?>&eid=" + intId + "&cmd=<?php echo CMD_SORT ?>&dir=" + direction);
 	}
-	
+
 	return false;
 }
 

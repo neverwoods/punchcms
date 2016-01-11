@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/javascript');
+
 session_save_path($_SERVER["DOCUMENT_ROOT"] . "/sessions");
 session_start();
 
@@ -18,7 +20,7 @@ if (!is_object($objLang)) {
  * MetaLanguage Class.
  *************************************************************************/
 
-/*** 
+/***
  * MetaLanguage object.
  */
 var MetaLanguage = function() {
@@ -33,7 +35,7 @@ var MetaLanguage = function() {
 
 MetaLanguage.require = function(libraryName) {
 	var $objScript = jQuery("<script></script>");
-	
+
 	objScript.attr({
 		type: "text/javascript",
 		src: libraryName
@@ -55,10 +57,10 @@ MetaLanguage.prototype.init = function() {
 MetaLanguage.prototype.swap = function(languageId) {
 	var $objImage 		= jQuery("#meta_language_cascade"),
 		$objButton		= $objImage.parent();
-		
+
 	this.toTemp();
 	this.currentLanguage = languageId;
-	
+
 	//*** Check is current and default language is equal.
 	if (this.currentLanguage == this.defaultLanguage) {
 		$objImage.attr("src", "images/lang_unlocked_disabled.gif");
@@ -71,7 +73,7 @@ MetaLanguage.prototype.swap = function(languageId) {
 		}
 		$objButton.bind("mouseover mouseout click", function(event){
 			var objReturn;
-			
+
 			switch(event.type){
 				case "mouseover":
 					objReturn = objMetaLanguage.buttonOver("cascadeElement", this);
@@ -83,11 +85,11 @@ MetaLanguage.prototype.swap = function(languageId) {
 					objReturn = objMetaLanguage.toggleCascadeElement();
 					break;
 			}
-			
+
 			return objReturn;
 		});
-	}		
-		
+	}
+
 	for (var count in this.fields) {
 		this.toggleCascadeState(this.fields[count].id, this.fields[count].cascades[this.currentLanguage]);
 		this.toScreen(this.fields[count].id);
@@ -97,7 +99,7 @@ MetaLanguage.prototype.swap = function(languageId) {
 MetaLanguage.prototype.addField = function(fieldId, strCascades) {
 	//*** Create and store the field object in the global fields array.
 	var objField = new MetaTextField(fieldId, this, strCascades);
-		
+
 	this.fields[fieldId] = objField;
 	this.toScreen(fieldId);
 }
@@ -119,10 +121,10 @@ MetaLanguage.prototype.toTemp = function(fieldId) {
 MetaLanguage.prototype.buttonOver = function(strButtonType, objImage, fieldId) {
 	var $objImage 	= (objImage instanceof jQuery) ? objImage : jQuery(objImage), // Make sure it's a jQuery object
 		$objButton	= $objImage.parent();
-		
+
 	this.hover = true;
 	this.buttonType = strButtonType;
-	
+
 	switch (strButtonType) {
 		case "cascadeElement":
 			if (this.cascades[this.currentLanguage] !== true) {
@@ -133,7 +135,7 @@ MetaLanguage.prototype.buttonOver = function(strButtonType, objImage, fieldId) {
 				overlib("<?php echo $objLang->get("langElementUnlock", "tip") ?>");
 			}
 			break;
-			
+
 		case "cascadeField":
 			if (this.fields[fieldId].cascades[this.currentLanguage] !== true) {
 				$objImage.attr("src", "images/lang_locked.gif");
@@ -142,17 +144,17 @@ MetaLanguage.prototype.buttonOver = function(strButtonType, objImage, fieldId) {
 				$objImage.attr("src", "images/lang_unlocked.gif");
 				overlib("<?php echo $objLang->get("langFieldUnlock", "tip") ?>");
 			}
-			break;			
+			break;
 	}
 }
 
 MetaLanguage.prototype.buttonOut = function(strButtonType, objImage, fieldId) {
 	var $objImage 	= (objImage instanceof jQuery) ? objImage : jQuery(objImage), // Make sure it's a jQuery object
 		$objButton	= $objImage.parent();
-		
+
 	this.hover = false;
 	this.buttonType = strButtonType;
-	
+
 	switch (strButtonType) {
 		case "cascadeElement":
 			if (this.cascades[this.currentLanguage] !== true) {
@@ -162,7 +164,7 @@ MetaLanguage.prototype.buttonOut = function(strButtonType, objImage, fieldId) {
 			}
 			nd();
 			break;
-			
+
 		case "cascadeField":
 			if (this.fields[fieldId].cascades[this.currentLanguage] !== true) {
 				$objImage.attr("src", "images/lang_unlocked.gif");
@@ -185,8 +187,8 @@ MetaLanguage.prototype.toggleCascadeElement = function() {
 	} else {
 		this.cascades[this.currentLanguage] = true;
 	}
-	
-	//*** Toggle button image.  
+
+	//*** Toggle button image.
 	if (this.cascades[this.currentLanguage] == true) {
 		if (this.hover) overlib("<?php echo $objLang->get("langElementUnlock", "tip") ?>");
 		jQuery("#meta_language_cascade").attr("src", "images/lang_unlocked.gif");
@@ -213,7 +215,7 @@ MetaLanguage.prototype.toggleCascadeField = function(fieldId) {
 	} else {
 		this.fields[fieldId].cascades[this.currentLanguage] = true;
 	}
-	
+
 	//*** Reset global cascade state.
 	this.cascades[this.currentLanguage] = false;
 	jQuery("#meta_language_cascade").attr("src", "images/lang_unlocked.gif");
@@ -223,10 +225,10 @@ MetaLanguage.prototype.toggleCascadeField = function(fieldId) {
 	this.toScreen(this.fields[fieldId].id);
 }
 
-MetaLanguage.prototype.toggleCascadeState = function(fieldId, state) {	
+MetaLanguage.prototype.toggleCascadeState = function(fieldId, state) {
 	//*** Toggle object property.
 	this.fields[fieldId].cascades[this.currentLanguage] = state;
-	
+
 	//*** Set the cascade input field.
 	var strValue = this.fields[fieldId].getCascades();
 	jQuery("#" + fieldId + "_cascades").val(strValue);
@@ -236,17 +238,17 @@ MetaLanguage.prototype.setFieldValue = function(fieldId, strValue) {
 	jQuery("#" + fieldId + "_" + this.currentLanguage).val(strValue);
 }
 
-/*** 
+/***
  * MetaField object.
  */
 function MetaField(strId, objParent, strCascades) {
 	this.id 				= strId || 0;
 	this.parent				= objParent || null;
 	this.cascades 			= {};
-	
+
 	if (strCascades != undefined) this.setCascades(strCascades);
 }
-	
+
 MetaField.prototype.getCascades = function() {
 	var strReturn = "";
 	var arrTemp = new Array();
@@ -260,7 +262,7 @@ MetaField.prototype.getCascades = function() {
 	strReturn = arrTemp.join(",");
 	return strReturn;
 }
-	
+
 MetaField.prototype.setCascades = function(strCascades) {
 	var arrCascades = strCascades.split(",");
 
@@ -288,12 +290,12 @@ MetaField.prototype.setIconCascade = function() {
 			$objButton.bind("click", function(){ return false; }); // No need to be clickable
 		}
 		$objImage.attr("src", strImageSrc);
-	
+
 	} else {
 		$objButton.unbind("mouseover mouseout click"); // Clear all events before binding new ones
 		$objButton.bind("mouseover mouseout click", function(event){
 			var objReturn;
-			
+
 			switch(event.type){
 				case "mouseover":
 					objMetaLanguage.buttonOver('cascadeField', this, strId);
@@ -305,7 +307,7 @@ MetaField.prototype.setIconCascade = function() {
 					objMetaLanguage.toggleCascadeField(strId);
 					break;
 			}
-			
+
 			return false;
 		});
 
@@ -323,18 +325,18 @@ MetaField.prototype.setIconCascade = function() {
 MetaField.prototype.toScreen = function() {
 	this.setIconCascade();
 	jQuery("#" + this.id).val(jQuery("#" + this.id + "_" + this.parent.currentLanguage).val());
-	
+
 	return true;
 }
 
 MetaField.prototype.toTemp = function() {
 	var strValue = jQuery("#" + this.id).val();
-	
+
 	jQuery("#" + this.id + "_" + this.parent.currentLanguage).val(strValue);
 	return true;
 }
 
-/*** 
+/***
  * MetaTextField object.
  */
 function MetaTextField(strId, objParent, strCascades) {

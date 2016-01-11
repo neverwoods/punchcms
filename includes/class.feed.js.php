@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/javascript');
+
 session_save_path($_SERVER["DOCUMENT_ROOT"] . "/sessions");
 session_start();
 
@@ -84,6 +86,6 @@ Feed.multiSelect = function() {
 
 	//*** Loop through the fields to check or uncheck.
 	for (i = 0; i < arrCheckbox.length; i++) {
-		arrCheckbox.attr("checked", this.checked); 
+		arrCheckbox.attr("checked", this.checked);
 	}
 }

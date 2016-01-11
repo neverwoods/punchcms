@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/javascript');
+
 session_save_path($_SERVER["DOCUMENT_ROOT"] . "/sessions");
 session_start();
 
@@ -18,7 +20,7 @@ if (!is_object($objLang)) {
  * FeedLanguage Class.
  *************************************************************************/
 
-/*** 
+/***
  * FeedLanguage object.
  */
 var FeedLanguage = function() {
@@ -36,7 +38,7 @@ var FeedLanguage = function() {
 
 FeedLanguage.require = function(libraryName) {
 	var $objScript = jQuery("<script></script>");
-	
+
 	objScript.attr({
 		type: "text/javascript",
 		src: libraryName
@@ -52,12 +54,12 @@ FeedLanguage.load = function() {
 
 FeedLanguage.prototype.init = function() {
 	var __this = this;
-	
+
 	$(this.svgWrapper)
 		.css( "height", $(this.fieldsWrapper).height())
 		.css( "width", $(this.fieldsWrapper).width());
-	
-	//*** Fix IE draggable bug.		
+
+	//*** Fix IE draggable bug.
 	$.extend($.ui.draggable.prototype, (function (orig) {
 	  return {
 	    _mouseCapture: function (event) {
@@ -67,18 +69,18 @@ FeedLanguage.prototype.init = function() {
 	    }
 	  };
 	})($.ui.draggable.prototype["_mouseCapture"]));
-								
+
 	$(this.feedsWrapper)
 		.draggable({ revert: true, scroll: true, revertDuration: 0, containment: this.fieldsWrapper, opacity: 0.50 })
 		.hover(
-			function(){ $(this).addClass("hover"); }, 
+			function(){ $(this).addClass("hover"); },
 			function(){ $(this).removeClass("hover"); }
 		);
-		
+
 	for (var count in this.fields) {
 		this.toScreen(this.fields[count].id);
-	}	
-	
+	}
+
 	$(this.templateWrapper).bind("click", function(){
 		$(".input-feed", this).removeClass("disabled").show().focus();
 	});
@@ -99,10 +101,10 @@ FeedLanguage.prototype.init = function() {
 FeedLanguage.prototype.swap = function(languageId) {
 	var $objImage 		= jQuery("#language_cascade"),
 		$objButton		= $objImage.parent();
-		
+
 	this.toTemp();
 	this.currentLanguage = languageId;
-	
+
 	//*** Check is current and default language is equal.
 	if (this.currentLanguage == this.defaultLanguage) {
 		$objImage.attr("src", "images/lang_unlocked_disabled.gif");
@@ -115,7 +117,7 @@ FeedLanguage.prototype.swap = function(languageId) {
 		}
 		$objButton.bind("mouseover mouseout click", function(event){
 			var objReturn;
-			
+
 			switch(event.type){
 				case "mouseover":
 					objReturn = objFeedLanguage.buttonOver("cascadeElement", this);
@@ -127,13 +129,13 @@ FeedLanguage.prototype.swap = function(languageId) {
 					objReturn = objFeedLanguage.toggleCascadeElement();
 					break;
 			}
-			
+
 			return objReturn;
 		});
 	}
-		
+
 	$(this.svgWrapper).empty();
-	
+
 	for (var count in this.fields) {
 		this.toggleCascadeState(this.fields[count].id, this.fields[count].cascades[this.currentLanguage]);
 		this.toScreen(this.fields[count].id, true);
@@ -143,7 +145,7 @@ FeedLanguage.prototype.swap = function(languageId) {
 FeedLanguage.prototype.addField = function(fieldId, strCascades) {
 	//*** Create and store the field object in the global fields array.
 	var objField = new TemplateFeedField(fieldId, this, strCascades);
-		
+
 	this.fields[fieldId] = objField;
 }
 
@@ -167,7 +169,7 @@ FeedLanguage.prototype.buttonOver = function(strButtonType, objImage, fieldId) {
 
 	this.hover = true;
 	this.buttonType = strButtonType;
-	
+
 	switch (strButtonType) {
 		case "cascadeElement":
 			if (this.cascades[this.currentLanguage] !== true) {
@@ -178,7 +180,7 @@ FeedLanguage.prototype.buttonOver = function(strButtonType, objImage, fieldId) {
 				overlib("<?php echo $objLang->get("langElementUnlock", "tip") ?>");
 			}
 			break;
-			
+
 		case "cascadeField":
 			if (this.fields[fieldId].cascades[this.currentLanguage] !== true) {
 				$objImage.attr("src", "images/lang_locked.gif");
@@ -194,10 +196,10 @@ FeedLanguage.prototype.buttonOver = function(strButtonType, objImage, fieldId) {
 FeedLanguage.prototype.buttonOut = function(strButtonType, objImage, fieldId) {
 	var $objImage 	= (objImage instanceof jQuery) ? objImage : jQuery(objImage), // Make sure it's a jQuery object
 		$objButton	= $objImage.parent();
-	
+
 	this.hover = false;
 	this.buttonType = strButtonType;
-	
+
 	switch (strButtonType) {
 		case "cascadeElement":
 			if (this.cascades[this.currentLanguage] !== true) {
@@ -207,7 +209,7 @@ FeedLanguage.prototype.buttonOut = function(strButtonType, objImage, fieldId) {
 			}
 			nd();
 			break;
-			
+
 		case "cascadeField":
 			if (this.fields[fieldId].cascades[this.currentLanguage] !== true) {
 				$objImage.attr("src", "images/lang_unlocked.gif");
@@ -230,22 +232,22 @@ FeedLanguage.prototype.toggleCascadeElement = function() {
 	} else {
 		this.cascades[this.currentLanguage] = true;
 	}
-	
-	//*** Toggle button image.  
+
+	//*** Toggle button image.
 	if (this.cascades[this.currentLanguage] == true) {
 		if (this.hover) overlib("<?php echo $objLang->get("langElementUnlock", "tip") ?>");
 		jQuery("#language_cascade").attr("src", "images/lang_unlocked.gif");
-		
+
 		$(this.feedsWrapper).draggable("enable");
 	} else {
 		if (this.hover) overlib("<?php echo $objLang->get("langElementCascade", "tip") ?>");
 		jQuery("#language_cascade").attr("src", "images/lang_locked.gif");
-		
+
 		$(this.feedsWrapper).draggable("disable");
 	}
 
 	$(this.svgWrapper).empty();
-	
+
 	//*** Take action according to the state.
 	for (var count in this.fields) {
 		this.toggleCascadeState(this.fields[count].id, this.cascades[this.currentLanguage]);
@@ -264,7 +266,7 @@ FeedLanguage.prototype.toggleCascadeField = function(fieldId) {
 	} else {
 		this.fields[fieldId].cascades[this.currentLanguage] = true;
 	}
-	
+
 	//*** Reset global cascade state.
 	this.cascades[this.currentLanguage] = false;
 	jQuery("#language_cascade").attr("src", "images/lang_unlocked.gif");
@@ -274,10 +276,10 @@ FeedLanguage.prototype.toggleCascadeField = function(fieldId) {
 	this.toScreen(this.fields[fieldId].id);
 }
 
-FeedLanguage.prototype.toggleCascadeState = function(fieldId, state) {	
+FeedLanguage.prototype.toggleCascadeState = function(fieldId, state) {
 	//*** Toggle object property.
 	this.fields[fieldId].cascades[this.currentLanguage] = state;
-	
+
 	//*** Set the cascade input field.
 	var strValue = this.fields[fieldId].getCascades();
 	jQuery("#" + fieldId + "_cascades").val(strValue);
@@ -287,29 +289,29 @@ FeedLanguage.prototype.setFieldValue = function(fieldId, strValue) {
 	jQuery("#" + fieldId + "_" + this.currentLanguage).val(strValue);
 }
 
-FeedLanguage.prototype.svgDrawLine = function(eTarget, eSource) {				
+FeedLanguage.prototype.svgDrawLine = function(eTarget, eSource) {
 	var __this = this;
-					
-	setTimeout(function(){							
+
+	setTimeout(function(){
 		var $source = eSource;
 		var $target = eTarget;
 
 		// origin -> ending ... from left to right
 		var originX = $source.positionAncestor(__this.fieldsWrapper).left;
 		var originY = $source.positionAncestor(__this.fieldsWrapper).top + 14;
-		
+
 		var endingX = $target.positionAncestor(__this.fieldsWrapper).left + $target.width() + 10;
 		var endingY = $target.positionAncestor(__this.fieldsWrapper).top + 14;
 
 		// draw lines
 		var svg = $(__this.svgWrapper);
-		
+
 		var space = 20;
 		var color = "#2C457C";
-		
+
 		// drawLine(X1, Y1, X2, Y2);
-		svg.drawLine(originX, originY, originX - space, originY, { 'color': color, 'stroke': 2 }); // beginning		
-		svg.drawLine(originX - space, originY, endingX + space, endingY, { 'color': color, 'stroke': 2 }); // diagonal line	
+		svg.drawLine(originX, originY, originX - space, originY, { 'color': color, 'stroke': 2 }); // beginning
+		svg.drawLine(originX - space, originY, endingX + space, endingY, { 'color': color, 'stroke': 2 }); // diagonal line
 		svg.drawLine(endingX + space, endingY, endingX, endingY, { 'color': color, 'stroke': 2 }); // ending
 	}, 10);
 }
@@ -319,18 +321,18 @@ FeedLanguage.prototype.svgDrawLines = function() {
 	for (var count in this.fields) {
 		this.toScreen(this.fields[count].id, true);
 	}
-}		
+}
 
-/*** 
+/***
  * TemplateFeedField object.
  */
 function TemplateFeedField(strId, objParent, strCascades) {
 	this.id 		= strId || 0;
 	this.parent		= objParent || null;
 	this.cascades 	= {};
-	
+
 	if (strCascades != undefined) this.setCascades(strCascades);
-	
+
 	var __this = this;
 	jQuery("#" + this.id).droppable({
 		tolerance: 'pointer',
@@ -345,7 +347,7 @@ function TemplateFeedField(strId, objParent, strCascades) {
 		}
 	});
 }
-	
+
 TemplateFeedField.prototype.getCascades = function() {
 	var strReturn = "";
 	var arrTemp = new Array();
@@ -359,7 +361,7 @@ TemplateFeedField.prototype.getCascades = function() {
 	strReturn = arrTemp.join(",");
 	return strReturn;
 }
-	
+
 TemplateFeedField.prototype.setCascades = function(strCascades) {
 	var arrCascades = strCascades.split(",");
 
@@ -372,7 +374,7 @@ TemplateFeedField.prototype.setCascades = function(strCascades) {
 
 TemplateFeedField.prototype.toScreen = function(blnAuto) {
 	var __this = this;
-	
+
 	//*** Insert value into the field.
 	if (this.cascades[this.parent.currentLanguage] == true) {
 		//*** The field is cascading.
@@ -381,7 +383,7 @@ TemplateFeedField.prototype.toScreen = function(blnAuto) {
 		if ($source.length > 0) {
 			this.svgDrawLine($source);
 		}
-				
+
 		$(this.parent.feedsWrapper).draggable("disable");
 	} else {
 		//*** The field needs no special treatment.
@@ -402,11 +404,11 @@ TemplateFeedField.prototype.toScreen = function(blnAuto) {
 				this.svgDrawLine($source);
 			}
 		}
-		
+
 		jQuery("#" + this.id).droppable('enable');
 		$(this.parent.feedsWrapper).draggable("enable");
 	}
-	
+
 	return true;
 }
 

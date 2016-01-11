@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/javascript');
+
 session_save_path($_SERVER["DOCUMENT_ROOT"] . "/sessions");
 session_start();
 
@@ -92,7 +94,7 @@ PTemplateField.multiSelect = function() {
 PTemplateField.addSetting = function(type, trigger) {
 	var $objTrigger = (trigger instanceof jQuery) ? trigger : jQuery(trigger),
 		$objClone	= $objTrigger.parent().parent().clone();
-	
+
 	switch (type) {
 		case "image":
 			jQuery("#tfv_image_setting_name").parent().show();
@@ -102,41 +104,41 @@ PTemplateField.addSetting = function(type, trigger) {
 			$objClone.find("input").each(function(){
 				jQuery(this).val("");
 			});
-			
+
 			jQuery("#tfv_image_setting_name", $objClone).parent().show();
-			
+
 			var intValue = jQuery("#tfv_image_settings_count").val();
 			jQuery("#tfv_image_settings_count").val((intValue - 1) + 2); // thisway javascript understands it's an integer
-			
-			$objClone.fadeIn("fast", function(){ 
-				jQuery.scrollTo($objClone, {duration: 1200}); 
+
+			$objClone.fadeIn("fast", function(){
+				jQuery.scrollTo($objClone, {duration: 1200});
 				jQuery(this).animate({backgroundColor: "#E0EEFF"}).animate({backgroundColor: "#ffffff"}); // Blink the new fieldset
 			});
-			
+
 			break;
 	}
 	return false;
-	
+
 }
 
 PTemplateField.removeSetting = function(type, trigger) {
 	var $objTrigger = (trigger instanceof jQuery) ? trigger : jQuery(trigger),
 		$objElement = $objTrigger.parent().parent(),
 		intCounter	= jQuery("fieldset", "#subImage").length;
-	
+
 	switch (type) {
 		case "image":
-			$objElement.fadeOut("fast", function(){ 
-				jQuery(this).remove(); 
+			$objElement.fadeOut("fast", function(){
+				jQuery(this).remove();
 				if (intCounter == 3) {
 					jQuery("#tfv_image_setting_name").val(""); // Reset the value.
 					jQuery("#tfv_image_setting_name").parent().hide();
 				}
 			});
 			jQuery("#tfv_image_settings_count").val(jQuery("#tfv_image_settings_count").val() - 1);
-			
+
 			break;
 	}
-	
+
 	return false;
 }
