@@ -34,6 +34,7 @@ if ($objLiveUser->isLoggedIn() && $strCommand == CMD_LOGOUT) {
 		}
 	}
 }
+
 if (!$objLiveUser->isLoggedIn() && $intCatId != NAV_MYPUNCH_LOGIN && $intCatId != NAV_MYPUNCH_NOACCOUNT) {
 	//*** Redirect to the login screen.
 	header("Location: " . Request::getURI(($_CONF['app']['secureLogin']) ? "https" : "http") . "/?cid=" . NAV_MYPUNCH_LOGIN);

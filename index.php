@@ -76,7 +76,7 @@ $strOutput .= parseHeader($intCatId, $strCommand, $intElmntId);
 //*** Route to the correct HTML Body Parser.
 switch ($intCatId) {
 	case NAV_MYPUNCH_LOGIN:
-		if ($_CONF['app']['secureLogin']) {
+		if ($_CONF['app']['secureLogin'] && Request::getProtocol() != "https") {
 			header("Location: " . Request::getURI("https") . "/?cid=" . NAV_MYPUNCH_LOGIN);
 			exit;
 		} else {
